@@ -162,13 +162,35 @@ class Counter extends React.Component {
 }
 
 
+class RefsExample extends React.Component {
+    onClick = () => {
+        if(this.domNode) {
+            this.domNode.textContent = "Change that TEXT!"
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                <div ref={domNode => this.domNode = domNode}>
+                    Rendered text content
+                </div>
+
+                <button onClick={this.onClick}>Click Me!</button>
+            </div>
+        );
+    }
+}
+
+
 
 // ========================================
 
 ReactDOM.render(
     //<Game />,
     //<HelloWorld name="Jack" />,
-    <Counter />,
+    //<Counter />,
+    <RefsExample />,
     document.getElementById('root')
 );
 

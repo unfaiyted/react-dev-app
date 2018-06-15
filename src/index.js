@@ -139,12 +139,36 @@ class HelloWorld extends React.Component {
 }
 
 
+// Creates a counter the counts up up up
+class Counter extends React.Component {
+    state = { counter :0 };
+
+
+    onClick = () => {
+        this.setState({counter: this.state.counter + 1});
+    };
+
+    render() {
+            const {counter} = this.state;
+        return (
+          <div>
+              Button was clicked!
+              <div>{counter} times</div>
+              <button onClick={this.onClick}>Click Me</button>
+          </div>
+        );
+    }
+
+}
+
+
 
 // ========================================
 
 ReactDOM.render(
     //<Game />,
-    <HelloWorld name="Jack" />,
+    //<HelloWorld name="Jack" />,
+    <Counter />,
     document.getElementById('root')
 );
 

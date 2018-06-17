@@ -28,7 +28,7 @@ export default class NoteStore {
     }
 
     update(updatedNote) {
-        console.log('updated Note', updatedNote);
+        // console.log('updated Note', updatedNote);
 
         this.setState({
             notes: this.notes.map(note => {

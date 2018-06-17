@@ -68,16 +68,18 @@ class App extends React.Component  {
 
 
     editNote = (id, task) => {
-        this.setState({
-           notes: this.state.notes.map(note => {
-               if(note.id === id) {
-                   note.editing = false;
-                   note.task = task;
-               }
+        // this.setState({
+        //    notes: this.state.notes.map(note => {
+        //        if(note.id === id) {
+        //            note.editing = false;
+        //            note.task = task;
+        //        }
+        //
+        //        return note;
+        //    })
+        // });
 
-               return note;
-           })
-        });
+        this.props.NoteActions.update({id, task, editing: false});
     }
 
 

@@ -2,11 +2,12 @@ import React from 'react'
 import uuid from 'uuid';
 import connect from '../libs/connect';
 import NoteActions from '../actions/NoteActions';
+import LaneActions from '../actions/LaneActions';
 import Notes from './Notes';
 import Note from "./Note";
 
 const Lane = ({
-    lane, notes, NoteActions, ...props
+    lane, notes, LaneActions, NoteActions, ...props
 }) => {
     const editNote = (id, task) => {
         NoteActions.update({id, task, editing: false});
@@ -15,9 +16,11 @@ const Lane = ({
         e.stopPropagation();
         const noteId = uuid.v4();
         NoteActions.create({id: noteId, task: 'New task'});
+        LaneActions.attachToLane({laneId: lane.id, noteId});
     };
     const deleteNote = (noteId, e) => {
         e.stopPropagation();
+        LaneActions.detachfromLane({laneId: lane.id , noteId});
         NoteActions.delete(noteId);
     };
     const activateNoteEdit = id => {
@@ -33,7 +36,7 @@ const Lane = ({
                 <div className="lane-name">{lane.name}</div>
             </div>
             <Notes
-                notes={notes}
+                notes={selectNotesByIds(notes, lane.notes)}
                 onNoteClick={activateNoteEdit}
                 onEdit={editNote}
                 onDelete={deleteNote} />
@@ -42,11 +45,22 @@ const Lane = ({
 };
 
 
+function selectNotesByIds(allNotes, noteIds = []) {
+
+    return noteIds.reduce((notes, id) =>
+        // add matching ids
+    notes.concat(
+        allNotes.filter(note => note.id === id)
+    ),[]);
+}
+
+
 export default connect(
     ({notes}) => ({
     notes
 }), {
-        NoteActions
+        NoteActions,
+        LaneActions
     }
 )(Lane)
 
